@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends RigidBody2D
 
 export var WALK_SPEED = 400;
 export var GRAVITY = 100000;
@@ -24,7 +24,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_pressed("jump"):
 		velocity.y = JUMP_SPEED * delta;
-		move_and_collide(Vector2(0, velocity.y));
+		move_local_y(velocity.y);
 		SPEED_Y = JUMP_SPEED * delta;
 		
 	#if is_on_floor():
@@ -33,7 +33,8 @@ func _physics_process(delta):
 	
 	SPEED_Y += GRAVITY * delta;
 	velocity.y = SPEED_Y * delta
-	move_and_slide_with_snap(velocity, Vector2(0, 0));
+	move_local_x(velocity.x)
+	move_local_y(velocity.y)
 	#move_and_slide(velocity);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
