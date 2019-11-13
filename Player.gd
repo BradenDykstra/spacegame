@@ -1,9 +1,10 @@
 extends KinematicBody2D
 
 export var WALK_SPEED = 400;
-export var GRAVITY = 100000;
+export var GRAVITY = 100;
 export var JUMP_SPEED = -1000;
 var SPEED_Y = 0;
+export var GRAV_DIR = Vector2(0, 1);
 #var screensize;
 
 # Called when the node enters the scene tree for the first time.
@@ -13,7 +14,7 @@ var SPEED_Y = 0;
 
 
 func _physics_process(delta):
-	#move_and_collide(Vector2(0, GRAVITY * delta));
+	move_and_collide(Vector2(GRAVITY * delta, GRAVITY * delta) * GRAV_DIR);
 	var velocity = Vector2();
 
 	if Input.is_action_pressed("right"):
@@ -31,9 +32,10 @@ func _physics_process(delta):
 		
 	
 	
-	SPEED_Y += GRAVITY * delta;
-	velocity.y = SPEED_Y * delta
-	move_and_slide_with_snap(velocity, Vector2(0, 0));
+	#SPEED_Y += GRAVITY * delta;
+	#velocity.y = SPEED_Y * delta
+	#velocity *= GRAV_DIR;
+	move_and_slide(velocity);
 	#move_and_slide(velocity);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
